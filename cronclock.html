@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta property="og:image" content="https://www.curiouschi.com/images/og_preview.jpg" />
+  <meta property="og:url" content="https://www.curiouschi.com/cronclock" />
+  <meta property="og:site_name" content="Curious Chicago" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Tell time like crontab!" />
+  <meta name="description" content="Tell time like crontab!">
+<style>
+
+html body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.background {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	vertical-align: middle;
+  background-color: #002451;
+}
+
+.absolute-center {
+	/*width: 50%;*/
+  	margin: auto;
+  	position: absolute;
+  	top: 30%; left: 50%;
+  	-webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
+#clock {
+    white-space: pre;
+    color: white;
+    font-family: "Ubuntu Mono", monospace;
+    font-size: 4.0em;
+    font-size: 6vw;
+}
+
+br {
+    line-height: 130%;
+}
+
+#description {
+    white-space: pre;
+    color: #d1f1a9;
+    font-family: "Ubuntu Mono", monospace;
+    font-size: 2.4em;
+    font-size: 3.6vw;
+    position: absolute;
+    top: 70px;
+    top: 7vw;
+}
+
+</style>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>CronClock</title>
+</head>
+<script>
+function cronTime() {
+    var today = new Date();
+    var s = today.getSeconds();
+    var m = today.getMinutes();
+    var h = today.getHours();
+    var dom = today.getDate();
+    var dow = today.getDay();
+    var month = today.getMonth() + 1;
+    var year = today.getFullYear();
+    m = checkTime(m);
+    h = checkTime(h);
+    month = checkTime(month);
+    dom = checkTime(dom);
+    dow = checkTime(dow);
+    (s%2 == 0) ? cursor = "|" : cursor = " "
+    elements = [m, h, dom, month, dow, year];
+    document.getElementById("clock").innerHTML = elements.join(" ") + cursor
+    var t = setTimeout(cronTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+</script>
+<body onload="cronTime()">
+<div class="background">
+  <div class="absolute-center">
+    <a id="clock" href="#" onclick="$('#moreDetails').fadeToggle();" style="text-decoration:none"></a>
+    <div id="description"><span id="moreDetails" style="display: none;">|    |    |    |    |    |      <br>|    |    |    |    |    Year<br>|    |    |    |    Day of week<br>|    |    |    Month<br>|    |    Day<br>|    Hour<br>Min</span></div>
+  </div>
+</div>
+</body>
+</html>
